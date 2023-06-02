@@ -19,6 +19,9 @@ The complexity of the algorithm depends on the number of tokens and lines in the
 
 Regular expressions are a powerful tool for pattern matching in text. However, if the Python file is very large or contains a large number of tokens, the intensive use of regular expressions may impact the program's performance. In such cases, alternative approaches, such as more advanced lexical and grammatical analysis, could be considered for improved efficiency.
 
+## Ethical Implications
+
+The greatest ethical implication I could found was that Regular expressions can be effective in many cases, but they may not accurately address all possible variations of tokens in the code. For instance, I am well aware that even though I tried to cover as many lexical categories as possible, it could be that the language adds new ones or that I missed some. If the syntax highlighter relies solely on regex, there is a risk of false positives or negatives, which could lead to an inaccurate representation of the code. This can be problematic if developers blindly rely on the syntax highlighter and make decisions based on a misinterpretation of their code.
 
 ## Usage
 
