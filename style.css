@@ -1,0 +1,36 @@
+body {
+    background-color: black;
+}
+
+
+.comment {
+    color: green;
+}
+
+.keyword {
+    color: blue;
+}
+
+.built_in_function {
+    color: yellow;
+}
+
+.identifier {
+    color: white;
+}
+
+.string {
+    color: red;
+}
+
+.number {
+    color: purple;
+}
+
+.delimiter {
+    color: orange;
+}
+
+.operator {
+    color: gray;
+}
