@@ -3,7 +3,7 @@
 # Santiago Benitez Perez - A01782813
 
 
-defmodule SyntaxHighlighter do
+defmodule S do
 
     @doc """
       Function to find a match at the beginning of the line passed to it.
@@ -52,7 +52,7 @@ defmodule SyntaxHighlighter do
 
     """
 
-    def highlight_line(line) do 
+    def highlight_line(line) do
       if line == "" do  # base case when the line is empty
         ""
       else
@@ -67,13 +67,39 @@ defmodule SyntaxHighlighter do
 
     """
 
-    def highlight_file(in_filename, out_filename) do # function that receives the python file to highlight and the output html file
+    def highlight_file({in_filename, out_filename}) do # function that receives the python file to highlight and the output html file
           data = in_filename
                 |> File.stream!()
                 |> Enum.map(&highlight_line/1)
                 |> Enum.join("")
           File.write(out_filename, to_html(data))
     end
+
+
+    # sequential version
+    def highlight_files(in_directory) do
+      "#{in_directory}/**/*.py"
+        |> Path.wildcard()
+        |> make_tuples()
+        |> Enum.map(&highlight_file/1)
+    end
+
+
+    #parallel version
+    def highlight_files_parallel(in_directory) do
+      "#{in_directory}/**/*.py"
+        |> Path.wildcard()
+        |> IO.inspect()
+        # |> make_tuples()
+        # |> Enum.map(&Task.async(fn -> highlight_file(&1) end))
+        # |> Enum.map(&Task.await(&1))
+    end
+
+    def make_tuples(files), do: do_make_tuples(files, 1, [])
+
+    defp do_make_tuples([], _i, res), do: Enum.reverse(res)
+
+    defp do_make_tuples([head | tail], i, res), do: do_make_tuples(tail, i + 1,  [{head, "out_file#{i}.html"} | res])
 
     defp to_html(code) do # function to generate a html format document
       "<html lang=\"en\">

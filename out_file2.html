@@ -1,0 +1,106 @@
+<html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="./style.css">
+          <title>Syntax Highlighter</title>
+        </head>
+        <body>
+          <pre>
+            <code>
+              <span class="keyword">import</span> <span class="identifier">random</span>
+
+<span class="comment"># Room class to represent each room in the game</span>
+<span class="keyword">class</span> <span class="identifier">Room</span><span class="delimiter">:</span>
+    <span class="keyword">def</span> <span class="identifier">__init__</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">name</span><span class="delimiter">,</span> <span class="identifier">description</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">name</span> <span class="delimiter">=</span> <span class="identifier">name</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">description</span> <span class="delimiter">=</span> <span class="identifier">description</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">exits</span> <span class="delimiter">=</span> <span class="delimiter">{</span><span class="delimiter">}</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">objects</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="delimiter">]</span>
+
+    <span class="keyword">def</span> <span class="identifier">add_exit</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">direction</span><span class="delimiter">,</span> <span class="identifier">room</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">exits</span><span class="delimiter">[</span><span class="identifier">direction</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="identifier">room</span>
+
+    <span class="keyword">def</span> <span class="identifier">add_object</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">obj</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">objects</span><span class="delimiter">.</span><span class="built_in_function">append</span><span class="delimiter">(</span><span class="identifier">obj</span><span class="delimiter">)</span>
+
+    <span class="keyword">def</span> <span class="identifier">remove_object</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">obj</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">objects</span><span class="delimiter">.</span><span class="built_in_function">remove</span><span class="delimiter">(</span><span class="identifier">obj</span><span class="delimiter">)</span>
+
+    <span class="keyword">def</span> <span class="identifier">get_exit</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">direction</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="keyword">return</span> <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">exits</span><span class="delimiter">.</span><span class="identifier">get</span><span class="delimiter">(</span><span class="identifier">direction</span><span class="delimiter">,</span> <span class="keyword">None</span><span class="delimiter">)</span>
+
+    <span class="keyword">def</span> <span class="identifier">get_objects</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="keyword">return</span> <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">objects</span>
+
+<span class="comment"># Object class to represent interactive objects in the game</span>
+<span class="keyword">class</span> <span class="identifier">Object</span><span class="delimiter">:</span>
+    <span class="keyword">def</span> <span class="identifier">__init__</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">name</span><span class="delimiter">,</span> <span class="identifier">description</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">name</span> <span class="delimiter">=</span> <span class="identifier">name</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">description</span> <span class="delimiter">=</span> <span class="identifier">description</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">usable</span> <span class="delimiter">=</span> <span class="keyword">False</span>
+
+    <span class="keyword">def</span> <span class="identifier">use</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="keyword">if</span> <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">usable</span><span class="delimiter">:</span>
+            <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"You use the"</span><span class="delimiter">,</span> <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">name</span><span class="delimiter">)</span>
+            <span class="comment"># Implement object usage logic here</span>
+        <span class="keyword">else</span><span class="delimiter">:</span>
+            <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"You can't use the"</span><span class="delimiter">,</span> <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">name</span><span class="delimiter">)</span>
+
+<span class="comment"># Game class to manage the game state and logic</span>
+<span class="keyword">class</span> <span class="identifier">Game</span><span class="delimiter">:</span>
+    <span class="keyword">def</span> <span class="identifier">__init__</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">rooms</span> <span class="delimiter">=</span> <span class="delimiter">{</span><span class="delimiter">}</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">current_room</span> <span class="delimiter">=</span> <span class="keyword">None</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">player_inventory</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="delimiter">]</span>
+
+    <span class="keyword">def</span> <span class="identifier">add_room</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">room</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">self</span><span class="delimiter">.</span><span class="identifier">rooms</span><span class="delimiter">[</span><span class="identifier">room</span><span class="delimiter">.</span><span class="identifier">name</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="identifier">room</span>
+
+    <span class="keyword">def</span> <span class="identifier">start</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="comment"># Implement game setup logic here</span>
+
+    <span class="keyword">def</span> <span class="identifier">print_current_room</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="comment"># Implement logic to print the current room's name, description, exits, and objects</span>
+
+    <span class="keyword">def</span> <span class="identifier">parse_command</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">command</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="comment"># Implement logic to parse and execute player commands</span>
+
+    <span class="keyword">def</span> <span class="identifier">move</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">direction</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="comment"># Implement logic to move the player to another room</span>
+
+    <span class="keyword">def</span> <span class="identifier">take</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">object_name</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="comment"># Implement logic to allow the player to take an object from the current room</span>
+
+    <span class="keyword">def</span> <span class="identifier">use</span><span class="delimiter">(</span><span class="identifier">self</span><span class="delimiter">,</span> <span class="identifier">object_name</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="comment"># Implement logic to allow the player to use an object from their inventory</span>
+
+<span class="comment"># Create game objects</span>
+<span class="identifier">game</span> <span class="delimiter">=</span> <span class="identifier">Game</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+<span class="comment"># Create rooms</span>
+<span class="identifier">room1</span> <span class="delimiter">=</span> <span class="identifier">Room</span><span class="delimiter">(</span><span class="string">"Room 1", "This is room 1."</span><span class="delimiter">)</span>
+<span class="identifier">room2</span> <span class="delimiter">=</span> <span class="identifier">Room</span><span class="delimiter">(</span><span class="string">"Room 2", "This is room 2."</span><span class="delimiter">)</span>
+<span class="identifier">room3</span> <span class="delimiter">=</span> <span class="identifier">Room</span><span class="delimiter">(</span><span class="string">"Room 3", "This is room 3."</span><span class="delimiter">)</span>
+
+<span class="comment"># Set room exits</span>
+<span class="identifier">room1</span><span class="delimiter">.</span><span class="identifier">add_exit</span><span class="delimiter">(</span><span class="string">"north"</span><span class="delimiter">,</span> <span class="identifier">room2</span><span class="delimiter">)</span>
+<span class="identifier">room2</span><span class="delimiter">.</span><span class="identifier">add_exit</span><span class="delimiter">(</span><span class="string">"south"</span><span class="delimiter">,</span> <span class="identifier">room1</span><span class="delimiter">)</span>
+<span class="identifier">room2</span><span class="delimiter">.</span><span class="identifier">add_exit</span><span class="delimiter">(</span><span class="string">"west"</span><span class="delimiter">,</span> <span class="identifier">room3</span><span class="delimiter">)</span>
+<span class="identifier">room3</span><span class="delimiter">.</span><span class="identifier">add_exit</span><span class="delimiter">(</span><span class="string">"east"</span><span class="delimiter">,</span> <span class="identifier">room2</span><span class="delimiter">)</span>
+
+<span class="comment"># Add rooms to the game</span>
+<span class="identifier">game</span><span class="delimiter">.</span><span class="identifier">add_room</span><span class="delimiter">(</span><span class="identifier">room1</span><span class="delimiter">)</span>
+<span class="identifier">game</span><span class="delimiter">.</span><span class="identifier">add_room</span><span class="delimiter">(</span><span class="identifier">room2</span><span class="delimiter">)</span>
+<span class="identifier">game</span><span class="delimiter">.</span><span class="identifier">add_room</span><span class="delimiter">(</span><span class="identifier">room3</span><span class="delimiter">)</span>
+
+<span class="comment"># Set the starting room</span>
+<span class="identifier">game</span><span class="delimiter">.</span><span class="identifier">current_room</span> <span class="delimiter">=</span> <span class="identifier">room1</span>
+
+<span class="comment"># Start the game</span>
+<span class="identifier">game</span><span class="delimiter">.</span><span class="identifier">start</span><span class="delimiter">(</span><span class="delimiter">)</span>
+            </code>
+          </pre>
+        </body>
+      </html>

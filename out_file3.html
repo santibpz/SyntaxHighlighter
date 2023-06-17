@@ -1,0 +1,63 @@
+<html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="./style.css">
+          <title>Syntax Highlighter</title>
+        </head>
+        <body>
+          <pre>
+            <code>
+              <span class="keyword">import</span> <span class="identifier">sys</span>
+<span class="keyword">import</span> <span class="identifier">math</span>
+
+<span class="keyword">def</span> <span class="identifier">bfs</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">,</span> <span class="identifier">edges</span><span class="delimiter">,</span> <span class="identifier">s</span><span class="delimiter">)</span><span class="delimiter">:</span>
+    <span class="comment">#initialize state, distance and parent for all the vertices</span>
+    <span class="identifier">state</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="number">0</span> <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">)</span><span class="delimiter">]</span>
+    <span class="identifier">distance</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="built_in_function">float</span><span class="delimiter">(</span><span class="string">'inf'</span><span class="delimiter">)</span> <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">)</span><span class="delimiter">]</span>
+    <span class="identifier">parent</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="number">-1</span> <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">)</span><span class="delimiter">]</span>
+    <span class="comment">#initialize state, distance and parent for the source vertex</span>
+    <span class="identifier">state</span><span class="delimiter">[</span><span class="identifier">s</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="number">1</span> 
+    <span class="identifier">distance</span><span class="delimiter">[</span><span class="identifier">s</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="number">0</span> 
+    <span class="identifier">parent</span><span class="delimiter">[</span><span class="identifier">s</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="string">'NIL'</span>
+    <span class="identifier">queue</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="delimiter">]</span>
+    <span class="identifier">arr</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="delimiter">]</span>
+    <span class="identifier">queue</span><span class="delimiter">.</span><span class="built_in_function">append</span><span class="delimiter">(</span><span class="identifier">s</span><span class="delimiter">)</span>
+    <span class="comment">#Start discovering the vertices starting from the source vertex</span>
+    <span class="keyword">while</span> <span class="identifier">queue</span><span class="delimiter">:</span>
+        <span class="identifier">x</span> <span class="delimiter">=</span> <span class="identifier">queue</span><span class="delimiter">.</span><span class="built_in_function">pop</span><span class="delimiter">(</span><span class="number">0</span><span class="delimiter">)</span>
+        <span class="identifier">arr</span><span class="delimiter">.</span><span class="built_in_function">append</span><span class="delimiter">(</span><span class="identifier">x</span><span class="delimiter">)</span>
+        <span class="comment">#Start discovering the vertices adjacent to x and store</span>
+        <span class="comment">#information about their parent, distance and state</span>
+        <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="built_in_function">len</span><span class="delimiter">(</span><span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span><span class="delimiter">)</span><span class="delimiter">:</span>
+            <span class="keyword">if</span> <span class="identifier">state</span><span class="delimiter">[</span><span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="number">0</span><span class="delimiter">:</span>
+                <span class="identifier">state</span><span class="delimiter">[</span><span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="number">1</span> 
+                <span class="identifier">distance</span><span class="delimiter">[</span><span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="identifier">distance</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span> <span class="operator">+</span> <span class="number">1</span>
+                <span class="identifier">parent</span><span class="delimiter">[</span><span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="identifier">x</span> 
+                <span class="identifier">queue</span><span class="delimiter">.</span><span class="built_in_function">append</span><span class="delimiter">(</span><span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span><span class="delimiter">)</span>
+        <span class="identifier">state</span><span class="delimiter">[</span><span class="identifier">x</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="number">-1</span>
+ 
+    <span class="keyword">return</span> <span class="identifier">arr</span> 
+ 
+<span class="keyword">def</span> <span class="identifier">main</span><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">:</span>
+   <span class="comment">#input format is described below</span>
+    <span class="identifier">n</span><span class="delimiter">,</span> <span class="identifier">m</span><span class="delimiter">,</span> <span class="identifier">s</span> <span class="delimiter">=</span> <span class="built_in_function">map</span><span class="delimiter">(</span><span class="built_in_function">int</span><span class="delimiter">,</span> <span class="built_in_function">input</span><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">.</span><span class="identifier">split</span><span class="delimiter">(</span><span class="delimiter">)</span>
+    <span class="identifier">edges</span> <span class="delimiter">=</span> <span class="delimiter">{</span><span class="delimiter">}</span>
+    <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="delimiter">]</span>
+    <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="identifier">m</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">a</span><span class="delimiter">,</span> <span class="identifier">b</span> <span class="delimiter">=</span> <span class="built_in_function">map</span><span class="delimiter">(</span><span class="built_in_function">int</span><span class="delimiter">,</span> <span class="built_in_function">input</span><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">.</span><span class="identifier">split</span><span class="delimiter">(</span><span class="delimiter">)</span>
+        <span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">a</span><span class="delimiter">]</span> <span class="operator">+=</span> <span class="delimiter">[</span><span class="identifier">b</span><span class="delimiter">]</span>
+        <span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">b</span><span class="delimiter">]</span> <span class="operator">+=</span> <span class="delimiter">[</span><span class="identifier">a</span><span class="delimiter">]</span>
+    <span class="keyword">for</span> <span class="identifier">i</span> <span class="keyword">in</span> <span class="built_in_function">range</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">)</span><span class="delimiter">:</span>
+        <span class="identifier">edges</span><span class="delimiter">[</span><span class="identifier">i</span><span class="delimiter">]</span><span class="delimiter">.</span><span class="identifier">sort</span><span class="delimiter">(</span><span class="delimiter">)</span>
+    <span class="identifier">arr</span> <span class="delimiter">=</span> <span class="identifier">bfs</span><span class="delimiter">(</span><span class="identifier">n</span><span class="delimiter">,</span> <span class="identifier">edges</span><span class="delimiter">,</span> <span class="identifier">s</span><span class="delimiter">)</span>
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="operator">*</span><span class="identifier">arr</span><span class="delimiter">)</span>
+ 
+<span class="keyword">if</span> <span class="identifier">__name__</span> <span class="delimiter">=</span> <span class="string">'__main__'</span><span class="delimiter">:</span>
+    <span class="identifier">main</span><span class="delimiter">(</span><span class="delimiter">)</span>
+            </code>
+          </pre>
+        </body>
+      </html>
