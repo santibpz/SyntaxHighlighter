@@ -21,7 +21,7 @@ Regular expressions are a powerful tool for pattern matching in text. However, i
 
 ## Ethical Implications
 
-The greatest ethical implication I could found was that Regular expressions can be effective in many cases, but they may not accurately address all possible variations of tokens in the code. For instance, I am well aware that even though I tried to cover as many lexical categories as possible, it could be that the language adds new ones or that I missed some. If the syntax highlighter relies solely on regex, there is a risk of false positives or negatives, which could lead to an inaccurate representation of the code. This can be problematic if developers blindly rely on the syntax highlighter and make decisions based on a misinterpretation of their code.
+The greatest ethical implication I could find was that Regular expressions can be effective in many cases, but they may not accurately address all possible variations of tokens in the code. For instance, I am well aware that even though I tried to cover as many lexical categories as possible, it could be that the language adds new ones or that I missed some. If the syntax highlighter relies solely on regex, there is a risk of false positives or negatives, which could lead to an inaccurate representation of the code. This can be problematic if developers blindly rely on the syntax highlighter and make decisions based on a misinterpretation of their code.
 
 ## Usage
 
