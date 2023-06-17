@@ -1,0 +1,133 @@
+<html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="./style.css">
+          <title>Syntax Highlighter</title>
+        </head>
+        <body>
+          <pre>
+            <code>
+              
+
+<span class="keyword">import</span> <span class="identifier">asyncio</span>
+<span class="keyword">from</span> <span class="identifier">os</span><span class="delimiter">.</span><span class="identifier">path</span> <span class="keyword">import</span> <span class="identifier">basename</span>
+
+<span class="keyword">import</span> <span class="identifier">aiohttp</span>
+
+
+<span class="keyword">def</span> <span class="identifier">download</span><span class="delimiter">(</span><span class="identifier">ways</span><span class="delimiter">)</span><span class="delimiter">:</span>
+    <span class="keyword">if</span> <span class="keyword">not</span> <span class="identifier">ways</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"Ways list is empty. Downloading is impossible"</span><span class="delimiter">)</span>
+        <span class="keyword">return</span>
+
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"downloading.."</span><span class="delimiter">)</span>
+
+    <span class="identifier">success_files</span> <span class="delimiter">=</span> <span class="built_in_function">set</span><span class="delimiter">(</span><span class="delimiter">)</span>
+    <span class="identifier">failure_files</span> <span class="delimiter">=</span> <span class="built_in_function">set</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+    <span class="identifier">event_loop</span> <span class="delimiter">=</span> <span class="identifier">asyncio</span><span class="delimiter">.</span><span class="identifier">get_event_loop</span><span class="delimiter">(</span><span class="delimiter">)</span>
+    <span class="keyword">try</span><span class="delimiter">:</span>
+        <span class="identifier">event_loop</span><span class="delimiter">.</span><span class="identifier">run_until_complete</span><span class="delimiter">(</span>
+            <span class="identifier">async_downloader</span><span class="delimiter">(</span><span class="identifier">ways</span><span class="delimiter">,</span> <span class="identifier">event_loop</span><span class="delimiter">,</span> <span class="identifier">success_files</span><span class="delimiter">,</span> <span class="identifier">failure_files</span><span class="delimiter">)</span>
+        <span class="delimiter">)</span>
+    <span class="keyword">finally</span><span class="delimiter">:</span>
+        <span class="identifier">event_loop</span><span class="delimiter">.</span><span class="identifier">close</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"Download complete"</span><span class="delimiter">)</span>
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"-"</span> <span class="operator">*</span> <span class="number">100</span><span class="delimiter">)</span>
+
+    <span class="keyword">if</span> <span class="identifier">success_files</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"success:"</span><span class="delimiter">)</span>
+        <span class="keyword">for</span> <span class="identifier">file</span> <span class="keyword">in</span> <span class="identifier">success_files</span><span class="delimiter">:</span>
+            <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">file</span><span class="delimiter">)</span>
+
+    <span class="keyword">if</span> <span class="identifier">failure_files</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"failure:"</span><span class="delimiter">)</span>
+        <span class="keyword">for</span> <span class="identifier">file</span> <span class="keyword">in</span> <span class="identifier">failure_files</span><span class="delimiter">:</span>
+            <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">file</span><span class="delimiter">)</span>
+
+
+<span class="keyword">async</span> <span class="keyword">def</span> <span class="identifier">async_downloader</span><span class="delimiter">(</span><span class="identifier">ways</span><span class="delimiter">,</span> <span class="identifier">loop</span><span class="delimiter">,</span> <span class="identifier">success_files</span><span class="delimiter">,</span> <span class="identifier">failure_files</span><span class="delimiter">)</span><span class="delimiter">:</span>
+    <span class="keyword">async</span> <span class="keyword">with</span> <span class="identifier">aiohttp</span><span class="delimiter">.</span><span class="identifier">ClientSession</span><span class="delimiter">(</span><span class="delimiter">)</span> <span class="keyword">as</span> <span class="identifier">session</span><span class="delimiter">:</span>
+        <span class="identifier">coroutines</span> <span class="delimiter">=</span> <span class="delimiter">[</span>
+            <span class="identifier">download_file_by_url</span><span class="delimiter">(</span>
+                <span class="identifier">url</span><span class="delimiter">,</span>
+                <span class="identifier">session</span><span class="delimiter">=</span><span class="identifier">session</span><span class="delimiter">,</span>
+            <span class="delimiter">)</span>
+            <span class="keyword">for</span> <span class="identifier">url</span> <span class="keyword">in</span> <span class="identifier">ways</span>
+        <span class="delimiter">]</span>
+
+        <span class="keyword">for</span> <span class="identifier">task</span> <span class="keyword">in</span> <span class="identifier">asyncio</span><span class="delimiter">.</span><span class="identifier">as_completed</span><span class="delimiter">(</span><span class="identifier">coroutines</span><span class="delimiter">)</span><span class="delimiter">:</span>
+            <span class="identifier">fail</span><span class="delimiter">,</span> <span class="identifier">url</span> <span class="delimiter">=</span> <span class="keyword">await</span> <span class="identifier">task</span>
+
+            <span class="keyword">if</span> <span class="identifier">fail</span><span class="delimiter">:</span>
+                <span class="identifier">failure_files</span><span class="delimiter">.</span><span class="identifier">add</span><span class="delimiter">(</span><span class="identifier">url</span><span class="delimiter">)</span>
+            <span class="keyword">else</span><span class="delimiter">:</span>
+                <span class="identifier">success_files</span><span class="delimiter">.</span><span class="identifier">add</span><span class="delimiter">(</span><span class="identifier">url</span><span class="delimiter">)</span>
+
+
+<span class="keyword">async</span> <span class="keyword">def</span> <span class="identifier">download_file_by_url</span><span class="delimiter">(</span><span class="identifier">url</span><span class="delimiter">,</span> <span class="identifier">session</span><span class="delimiter">=</span><span class="keyword">None</span><span class="delimiter">)</span><span class="delimiter">:</span>
+    <span class="identifier">fail</span> <span class="delimiter">=</span> <span class="keyword">True</span>
+    <span class="identifier">file_name</span> <span class="delimiter">=</span> <span class="identifier">basename</span><span class="delimiter">(</span><span class="identifier">url</span><span class="delimiter">)</span>
+
+    <span class="keyword">assert</span> <span class="identifier">session</span>
+
+    <span class="keyword">try</span><span class="delimiter">:</span>
+        <span class="keyword">async</span> <span class="keyword">with</span> <span class="identifier">session</span><span class="delimiter">.</span><span class="identifier">get</span><span class="delimiter">(</span><span class="identifier">url</span><span class="delimiter">)</span> <span class="keyword">as</span> <span class="identifier">response</span><span class="delimiter">:</span>
+            <span class="keyword">if</span> <span class="identifier">response</span><span class="delimiter">.</span><span class="identifier">status</span> <span class="delimiter">=</span> <span class="number">404</span><span class="delimiter">:</span>
+                <span class="keyword">print</span><span class="delimiter">(</span>
+                    <span class="string">"\t{} from {} : Failed : {}"</span><span class="delimiter">.</span><span class="built_in_function">format</span><span class="delimiter">(</span>
+                        <span class="identifier">file_name</span><span class="delimiter">,</span> <span class="identifier">url</span><span class="delimiter">,</span> <span class="string">"404 - Not found"</span>
+                    <span class="delimiter">)</span>
+                <span class="delimiter">)</span>
+                <span class="keyword">return</span> <span class="identifier">fail</span><span class="delimiter">,</span> <span class="identifier">url</span>
+
+            <span class="keyword">if</span> <span class="keyword">not</span> <span class="identifier">response</span><span class="delimiter">.</span><span class="identifier">status</span> <span class="delimiter">=</span> <span class="number">200</span><span class="delimiter">:</span>
+                <span class="keyword">print</span><span class="delimiter">(</span>
+                    <span class="string">"\t{} from {} : Failed : HTTP response {}"</span><span class="delimiter">.</span><span class="built_in_function">format</span><span class="delimiter">(</span>
+                        <span class="identifier">file_name</span><span class="delimiter">,</span> <span class="identifier">url</span><span class="delimiter">,</span> <span class="identifier">response</span><span class="delimiter">.</span><span class="identifier">status</span>
+                    <span class="delimiter">)</span>
+                <span class="delimiter">)</span>
+                <span class="keyword">return</span> <span class="identifier">fail</span><span class="delimiter">,</span> <span class="identifier">url</span>
+
+            <span class="identifier">data</span> <span class="delimiter">=</span> <span class="keyword">await</span> <span class="identifier">response</span><span class="delimiter">.</span><span class="identifier">read</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+            <span class="keyword">with</span> <span class="built_in_function">open</span><span class="delimiter">(</span><span class="identifier">file_name</span><span class="delimiter">,</span> <span class="string">"wb"</span><span class="delimiter">)</span> <span class="keyword">as</span> <span class="identifier">file</span><span class="delimiter">:</span>
+                <span class="identifier">file</span><span class="delimiter">.</span><span class="identifier">write</span><span class="delimiter">(</span><span class="identifier">data</span><span class="delimiter">)</span>
+
+    <span class="keyword">except</span> <span class="identifier">asyncio</span><span class="delimiter">.</span><span class="identifier">TimeoutError</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"\t{} from {}: Failed : {}".format(file_name, url, "Timeout error"</span><span class="delimiter">)</span>
+
+    <span class="keyword">except</span> <span class="identifier">aiohttp</span><span class="delimiter">.</span><span class="identifier">client_exceptions</span><span class="delimiter">.</span><span class="identifier">ClientConnectionError</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span>
+            <span class="string">"\t{} from {}: Failed : {}"</span><span class="delimiter">.</span><span class="built_in_function">format</span><span class="delimiter">(</span>
+                <span class="identifier">file_name</span><span class="delimiter">,</span> <span class="identifier">url</span><span class="delimiter">,</span> <span class="string">"Client connection error"</span>
+            <span class="delimiter">)</span>
+        <span class="delimiter">)</span>
+
+    <span class="keyword">else</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"\t{} from {} : Success"</span><span class="delimiter">.</span><span class="built_in_function">format</span><span class="delimiter">(</span><span class="identifier">file_name</span><span class="delimiter">,</span> <span class="identifier">url</span><span class="delimiter">)</span>
+        <span class="identifier">fail</span> <span class="delimiter">=</span> <span class="keyword">False</span>
+
+    <span class="keyword">return</span> <span class="identifier">fail</span><span class="delimiter">,</span> <span class="identifier">url</span>
+
+
+<span class="keyword">def</span> <span class="identifier">test</span><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">:</span>
+    <span class="identifier">ways</span> <span class="delimiter">=</span> <span class="delimiter">[</span>
+        <span class="string">"https://www.wikipedia.org"</span><span class="delimiter">,</span>
+        <span class="string">"https://www.ya.ru"</span><span class="delimiter">,</span>
+        <span class="string">"https://www.duckduckgo.com"</span><span class="delimiter">,</span>
+        <span class="string">"https://www.fail-path.unknown"</span><span class="delimiter">,</span>
+    <span class="delimiter">]</span>
+
+    <span class="identifier">download</span><span class="delimiter">(</span><span class="identifier">ways</span><span class="delimiter">)</span>
+
+
+<span class="keyword">if</span> <span class="identifier">__name__</span> <span class="delimiter">=</span> <span class="string">"__main__"</span><span class="delimiter">:</span>
+    <span class="identifier">test</span><span class="delimiter">(</span><span class="delimiter">)</span>
+            </code>
+          </pre>
+        </body>
+      </html>

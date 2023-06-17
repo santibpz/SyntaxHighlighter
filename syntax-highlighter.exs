@@ -3,7 +3,7 @@
 # Santiago Benitez Perez - A01782813
 
 
-defmodule S do
+defmodule SyntaxHighlighter do
 
     @doc """
       Function to find a match at the beginning of the line passed to it.
@@ -89,10 +89,9 @@ defmodule S do
     def highlight_files_parallel(in_directory) do
       "#{in_directory}/**/*.py"
         |> Path.wildcard()
-        |> IO.inspect()
-        # |> make_tuples()
-        # |> Enum.map(&Task.async(fn -> highlight_file(&1) end))
-        # |> Enum.map(&Task.await(&1))
+        |> make_tuples()
+        |> Enum.map(&Task.async(fn -> highlight_file(&1) end))
+        |> Enum.map(&Task.await(&1))
     end
 
     def make_tuples(files), do: do_make_tuples(files, 1, [])

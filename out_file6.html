@@ -1,0 +1,113 @@
+<html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="./style.css">
+          <title>Syntax Highlighter</title>
+        </head>
+        <body>
+          <pre>
+            <code>
+              <span class="comment"># This is an edited version</span>
+<span class="comment"># Made the code much more easier to read</span>
+<span class="comment"># Used better naming for variables</span>
+<span class="comment"># There were few inconsistencies in the outputs of the first if/else/if ladder \</span>
+<span class="comment"># inside the while loop. That is solved.</span>
+<span class="keyword">import</span> <span class="identifier">random</span>
+<span class="keyword">import</span> <span class="identifier">time</span>
+<span class="keyword">from</span> <span class="identifier">os</span> <span class="keyword">import</span> <span class="identifier">system</span>
+
+
+<span class="keyword">class</span> <span class="identifier">bcolors</span><span class="delimiter">:</span>
+    <span class="identifier">HEADERS</span> <span class="delimiter">=</span> <span class="string">"\033[95m"</span>
+    <span class="identifier">OKBLUE</span> <span class="delimiter">=</span> <span class="string">"\033[94m"</span>
+    <span class="identifier">OKGREEN</span> <span class="delimiter">=</span> <span class="string">"\033[93m"</span>
+    <span class="identifier">WARNING</span> <span class="delimiter">=</span> <span class="string">"\033[92m"</span>
+    <span class="identifier">FAIL</span> <span class="delimiter">=</span> <span class="string">"\033[91m"</span>
+    <span class="identifier">ENDC</span> <span class="delimiter">=</span> <span class="string">"\033[0m"</span>
+    <span class="identifier">BOLD</span> <span class="delimiter">=</span> <span class="string">"\033[1m"</span>
+    <span class="identifier">UNDERLINE</span> <span class="delimiter">=</span> <span class="string">"\033[4m"</span>
+
+
+<span class="identifier">run</span> <span class="delimiter">=</span> <span class="keyword">True</span>
+<span class="identifier">li</span> <span class="delimiter">=</span> <span class="delimiter">[</span><span class="string">"s", "w", "g"</span><span class="delimiter">]</span>
+
+<span class="identifier">system</span><span class="delimiter">(</span><span class="string">"clear"</span><span class="delimiter">)</span>
+<span class="identifier">b</span> <span class="delimiter">=</span> <span class="built_in_function">input</span><span class="delimiter">(</span>
+    <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">OKBLUE</span>
+    <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">BOLD</span>
+    <span class="operator">+</span> <span class="string">"Welcome to the game 'Snake-Water-Gun'.\nWanna play? Type Y or N: "</span>
+    <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span>
+<span class="delimiter">)</span><span class="delimiter">.</span><span class="identifier">capitalize</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+<span class="keyword">if</span> <span class="identifier">b</span> <span class="delimiter">=</span> <span class="string">"N"</span><span class="delimiter">:</span>
+    <span class="identifier">run</span> <span class="delimiter">=</span> <span class="keyword">False</span>
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"Ok bubyeee! See you later"</span><span class="delimiter">)</span>
+<span class="keyword">elif</span> <span class="identifier">b</span> <span class="delimiter">=</span> <span class="string">"Y" or b == "y"</span><span class="delimiter">:</span>
+    <span class="keyword">print</span><span class="delimiter">(</span>
+        <span class="string">"There will be 10 matches, and the one who wins more matches will win. Let's start."</span>
+    <span class="delimiter">)</span>
+
+<span class="identifier">i</span> <span class="delimiter">=</span> <span class="number">0</span>
+<span class="identifier">score</span> <span class="delimiter">=</span> <span class="number">0</span>
+
+<span class="keyword">while</span> <span class="identifier">run</span> <span class="keyword">and</span> <span class="identifier">i</span> <span class="operator"><</span> <span class="number">10</span><span class="delimiter">:</span>
+
+    <span class="identifier">comp_choice</span> <span class="delimiter">=</span> <span class="identifier">random</span><span class="delimiter">.</span><span class="identifier">choice</span><span class="delimiter">(</span><span class="identifier">li</span><span class="delimiter">)</span>
+    <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="built_in_function">input</span><span class="delimiter">(</span><span class="string">"Type s for snake, w for water or g for gun: "</span><span class="delimiter">)</span><span class="delimiter">.</span><span class="identifier">lower</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+    <span class="keyword">if</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="identifier">comp_choice</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">HEADERS</span> <span class="operator">+</span> <span class="string">"Game draws. Play again"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+
+    <span class="keyword">elif</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="string">"s" and comp_choice == "g"</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">FAIL</span> <span class="operator">+</span> <span class="string">"It's Snake v/s Gun You lose!"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+
+    <span class="keyword">elif</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="string">"s" and comp_choice == "w"</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">OKGREEN</span> <span class="operator">+</span> <span class="string">"It's Snake v/s Water. You won"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+        <span class="identifier">score</span> <span class="operator">+=</span> <span class="number">1</span>
+
+    <span class="keyword">elif</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="string">"w" and comp_choice == "s"</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">FAIL</span> <span class="operator">+</span> <span class="string">"It's Water v/s Snake You lose!"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+
+    <span class="keyword">elif</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="string">"w" and comp_choice == "g"</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">OKGREEN</span> <span class="operator">+</span> <span class="string">"It's Water v/s Gun. You won"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+        <span class="identifier">score</span> <span class="operator">+=</span> <span class="number">1</span>
+
+    <span class="keyword">elif</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="string">"g" and comp_choice == "w"</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">FAIL</span> <span class="operator">+</span> <span class="string">"It's Gun v/s Water You lose!"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+
+    <span class="keyword">elif</span> <span class="identifier">user_choice</span> <span class="delimiter">=</span> <span class="string">"g" and comp_choice == "s"</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">OKGREEN</span> <span class="operator">+</span> <span class="string">"It's Gun v/s Snake. You won"</span> <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span><span class="delimiter">)</span>
+        <span class="identifier">score</span> <span class="operator">+=</span> <span class="number">1</span>
+
+    <span class="keyword">else</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"Wrong input"</span><span class="delimiter">)</span>
+        <span class="keyword">continue</span>
+
+    <span class="identifier">i</span> <span class="operator">+=</span> <span class="number">1</span>
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">f</span><span class="string">"{10-i} matches left"</span><span class="delimiter">)</span>
+
+<span class="keyword">if</span> <span class="identifier">run</span> <span class="delimiter">=</span> <span class="keyword">True</span><span class="delimiter">:</span>
+    <span class="keyword">print</span><span class="delimiter">(</span><span class="identifier">f</span><span class="string">"Your score is {score} and the final result is..."</span><span class="delimiter">)</span>
+    <span class="identifier">time</span><span class="delimiter">.</span><span class="identifier">sleep</span><span class="delimiter">(</span><span class="number">3</span><span class="delimiter">)</span>
+    <span class="keyword">if</span> <span class="identifier">score</span> <span class="operator">></span> <span class="number">5</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span>
+            <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">OKGREEN</span>
+            <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">BOLD</span>
+            <span class="operator">+</span> <span class="string">"Woooh!!!!!!! Congratulations you won"</span>
+            <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span>
+        <span class="delimiter">)</span>
+    <span class="keyword">elif</span> <span class="identifier">score</span> <span class="delimiter">=</span> <span class="number">5</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span><span class="string">"Game draws!!!!!!!"</span><span class="delimiter">)</span>
+    <span class="keyword">elif</span> <span class="identifier">score</span> <span class="operator"><</span> <span class="number">5</span><span class="delimiter">:</span>
+        <span class="keyword">print</span><span class="delimiter">(</span>
+            <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">FAIL</span>
+            <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">BOLD</span>
+            <span class="operator">+</span> <span class="string">"You lose!!!. Better luck next time"</span>
+            <span class="operator">+</span> <span class="identifier">bcolors</span><span class="delimiter">.</span><span class="identifier">ENDC</span>
+        <span class="delimiter">)</span>
+            </code>
+          </pre>
+        </body>
+      </html>
